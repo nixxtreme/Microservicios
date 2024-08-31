@@ -1,0 +1,15 @@
+services:
+
+    db:
+      image: postgres:16.1
+      container_name: db-companies
+      restart: always
+      volumes:
+        - ./sql/11create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
+        - ./sql/11data.sql:/docker-entrypoint-initdb.d/data.sql
+      environment:
+        POSTGRES_DB: 'companies'
+        POSTGRES_USER: 'debuggeandoideas'
+        POSTGRES_PASSWORD: 'udemy'
+      ports:
+        - '5432:5432'
