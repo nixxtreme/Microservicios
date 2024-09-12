@@ -13,3 +13,31 @@ services:
         POSTGRES_PASSWORD: 'udemy'
       ports:
         - '5432:5432'
+
+    # db-qa:
+    #   image: postgres:16.1
+    #   container_name: db-companies-qa
+    #   restart: always
+    #   volumes:
+    #     - ./sql/11create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
+    #     - ./sql/11data.sql:/docker-entrypoint-initdb.d/data.sql
+    #   environment:
+    #     POSTGRES_DB: 'companies-qa'
+    #     POSTGRES_USER: 'debuggeandoideas-qa'
+    #     POSTGRES_PASSWORD: 'udemy'
+    #   ports:
+    #     - '5234:5432'
+
+    # db-prod:
+    #   image: postgres:16.1
+    #   container_name: db-companies-prod
+    #   restart: always
+    #   volumes:
+    #     - ./sql/11create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
+    #     - ./sql/11data.sql:/docker-entrypoint-initdb.d/data.sql
+    #   environment:
+    #     POSTGRES_DB: 'companies-prod'
+    #     POSTGRES_USER: 'debuggeandoideas-prod'
+    #     POSTGRES_PASSWORD: 'udemy'
+    #   ports:
+    #     - '5235:5432'
