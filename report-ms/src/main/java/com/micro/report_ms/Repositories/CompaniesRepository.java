@@ -4,10 +4,7 @@ import com.micro.report_ms.beans.LoadBalancerConfiguration;
 import com.micro.report_ms.models.Company;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -20,4 +17,7 @@ public interface CompaniesRepository {
 
     @PostMapping(path = "/micro-crud/company")
     Optional<Company> postByName(@RequestBody Company company);
+
+    @DeleteMapping(path = "/micro-crud/company/{name}")
+    void deteleByName(@PathVariable String name);
 }
