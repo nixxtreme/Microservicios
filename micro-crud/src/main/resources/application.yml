@@ -17,7 +17,7 @@ spring:
 server:
   servlet:
     context-path: /micro-crud
-  port: 0
+  port: 8081
 logging:
   level:
     org:
