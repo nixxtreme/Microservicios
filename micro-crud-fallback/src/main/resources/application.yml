@@ -1,17 +1,14 @@
 spring:
   application:
-    name: report-ms
-  profiles:
-    default: default
-  config:
-    import: "optional:configserver:http://localhost:7777"
+    name: micro-crud-fallback
 server:
   servlet:
-    context-path: /report-ms
-  port: 7070
+    context-path: /micro-crud-fallback
+  port: 8787
 eureka:
   instance:
     instance-id: "${spring.application.name}:${random.value}"
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
