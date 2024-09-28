@@ -22,7 +22,7 @@ public class CompanyController {
     @Operation(summary = "Obtener compañía por nombre")
     @GetMapping(path = "{name}")
     public ResponseEntity<Company>get(@PathVariable String name){
-        
+
         log.info("GET: company{}", name);
         return ResponseEntity.ok(this.companyService.readByName(name));
     }
