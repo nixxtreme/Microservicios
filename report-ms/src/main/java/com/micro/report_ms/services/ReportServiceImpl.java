@@ -5,6 +5,7 @@ import com.micro.report_ms.Repositories.CompaniesRepository;
 import com.micro.report_ms.helpers.ReportHelper;
 import com.micro.report_ms.models.Company;
 import com.micro.report_ms.models.WebSite;
+import com.micro.report_ms.streams.ReportPublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
@@ -24,7 +25,7 @@ public class ReportServiceImpl implements ReportService {
     private final ReportHelper reportHelper;
     private final CompaniesFallbackRepository companiesFallbackRepository;
     private final Resilience4JCircuitBreakerFactory circuitBreakerFactory;
-
+    private  final ReportPublisher reportPublisher;
 
     @Override
     public String makeReport(String name) {
@@ -48,6 +49,7 @@ public class ReportServiceImpl implements ReportService {
                 .founder(placeholder.get(2))
                 .websites(websites)
                 .build();
+        this.reportPublisher.publishReport(report);
         this.companiesRepository.postByName(company);
         return "Saved";
     }
