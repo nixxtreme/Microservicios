@@ -2,6 +2,8 @@ package com.micro.micro_crud.controllers;
 
 import com.micro.micro_crud.entities.Company;
 import com.micro.micro_crud.services.CompanyService;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.observation.annotation.Observed;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,8 @@ public class CompanyController {
 
     @Operation(summary = "Obtener compañía por nombre")
     @GetMapping(path = "{name}")
+    @Observed(name = "company.name")
+    @Timed(value = "company.name")
     public ResponseEntity<Company>get(@PathVariable String name){
 
         log.info("GET: company{}", name);
