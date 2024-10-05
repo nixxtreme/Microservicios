@@ -3,6 +3,7 @@ package com.micro.micro_crud.services;
 import com.micro.micro_crud.entities.Category;
 import com.micro.micro_crud.entities.Company;
 import com.micro.micro_crud.repositories.CompanyRepository;
+import io.micrometer.tracing.Tracer;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
+    private final Tracer tracer;
 
     @Override
     public Company create(Company company) {
@@ -30,6 +32,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company readByName(String name) {
+        var span = tracer.nextSpan().name("ReadByName");
+        try(Tracer.SpanInScope spanInScope = tracer.withSpan(span)) {
+            log.info("Getting company from DB");
+        }finally{
+            span.end();
+        }
         return this.companyRepository.findByName(name).orElseThrow(()-> new NoSuchElementException("Company not found"));
     }
 
