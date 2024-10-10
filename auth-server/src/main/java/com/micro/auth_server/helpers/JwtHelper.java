@@ -45,5 +45,5 @@ public class JwtHelper {
 
     private SecretKey getSecretKey(){
         return Keys.hmacShaKeyFor(this.jwtSecret.getBytes(StandardCharsets.UTF_8));
-    };
+    }
 }

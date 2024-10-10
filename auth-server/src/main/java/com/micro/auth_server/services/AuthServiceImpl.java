@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
         final var userFromDB = this.userRepository.findByUsername(user.getUsername()).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.UNAUTHORIZED, USER_EXCEPTION_MSG));
         this.validPassword(user, userFromDB);
-        return TokenDto.builder().accesstoken(this.jwtHelper.createToken(userFromDB.getUsername())).build()
+        return TokenDto.builder().accesstoken(this.jwtHelper.createToken(userFromDB.getUsername())).build();
     }
 
     @Override
