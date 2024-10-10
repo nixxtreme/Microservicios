@@ -3,6 +3,9 @@ spring:
     default: default
   application:
     name: auth-server
+  h2:
+    console:
+      enabled: false
   config:
     import: optional:configserver:http://localhost:7777
   datasource:
@@ -15,7 +18,7 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  port: 3000
+  port: 3001
   servlet:
     context-path: /auth-server
 
