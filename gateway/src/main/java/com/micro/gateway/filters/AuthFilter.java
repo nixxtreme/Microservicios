@@ -15,7 +15,7 @@ public class AuthFilter implements GatewayFilter {
 
     private final WebClient webClient;
     private static final String AUTH_VALIDATE_URI = "http://localhost:3030/auth-server/auth/jwt";
-    private static final String ACCESS_TOKEN_HEADER_NAME = "access-token";
+    private static final String ACCESS_TOKEN_HEADER_NAME = "accessToken";
 
     public AuthFilter() {
         this.webClient = WebClient.builder().build();
@@ -23,12 +23,19 @@ public class AuthFilter implements GatewayFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+
         if(!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
             return this.onError(exchange);
         }
 
         final var tokenHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+        System.out.println("Token received: " + tokenHeader);
+
         final var chunks = tokenHeader.split(" ");
+        System.out.println("Chunks l: " + chunks.length);
+        System.out.println("Chunks 0: " + chunks[0]);
+        System.out.println("Chunks 1: " + chunks[1]);
         if(chunks.length != 2 || !chunks[0].equals("Bearer")) {
             return this.onError(exchange);
         }
