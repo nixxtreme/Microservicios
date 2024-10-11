@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Slf4j
 public class JwtHelper {
 
-    @Value("")                                                                                                          //De springFramework
+    @Value("${application.jwt.secret}")                                                                                                          //De springFramework
     private String jwtSecret;
 
     public String createToken(String username) {
