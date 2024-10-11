@@ -29,7 +29,7 @@ public class AuthFilter implements GatewayFilter {
 
         final var tokenHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
         final var chunks = tokenHeader.split(" ");
-        if(chunks.length != 2 || chunks[0].equals("Bearer")) {
+        if(chunks.length != 2 || !chunks[0].equals("Bearer")) {
             return this.onError(exchange);
         }
         final var token = chunks[1];
