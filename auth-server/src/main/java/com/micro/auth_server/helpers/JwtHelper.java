@@ -5,7 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -27,8 +29,13 @@ public class JwtHelper {
     }
 
     public boolean validateToken(String token) {
-        final var expirationDate = this.getExpirationDate(token);
-        return expirationDate.after(new Date());
+        try{
+            final var expirationDate = this.getExpirationDate(token);
+            return expirationDate.after(new Date());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "JWT invalido");
+        }
+
     }
 
     private Date getExpirationDate(String token){
