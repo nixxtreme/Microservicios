@@ -171,8 +171,6 @@ services:
       image: micro-crud:latest
       container_name: companies
       restart: always
-      ports:
-        - "8081:8081"
       depends_on:
         - registry-server
         - config-server
@@ -243,3 +241,14 @@ services:
       environment:
         EUREKA_URL: http://registry-server:8761/eureka/
         CONFIG_SERVER_HOST: http://config-server:7777
+
+    gateway:
+      image: gateway:latest
+      container_name: gateway
+      restart: always
+      ports:
+        - "4040:4040"
+      depends_on:
+        - registry-server
+      environment:
+        EUREKA_URL: http://registry-server:8761/eureka/
