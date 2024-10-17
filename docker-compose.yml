@@ -62,7 +62,7 @@ services:
         KAFKA_BROKER_ID: 1
         KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://msg-broker:9092,PLAINTEXT_INTERNAL://msg-broker:29092
         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
         KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
         KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -213,4 +213,19 @@ services:
       environment:
         EUREKA_URL: http://registry-server:8761/eureka/
         CONFIG_SERVER_HOST: http://config-server:7777
+        BROKER_URL: 'msg-broker:9092'
+
+    report-listener:
+      image: report-listener:latest
+      container_name: report-listener
+      restart: always
+      depends_on:
+        - registry-server
+        - kafka
+        - report-ms
+        - mongo-db
+      entrypoint: /bin/sh -c "sleep 25 && java -jar /app.jar"
+      environment:
+        EUREKA_URL: http://registry-server:8761/eureka/
+        MONGO_HOST: mongo-db
         BROKER_URL: 'msg-broker:9092'

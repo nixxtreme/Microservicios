@@ -2,7 +2,7 @@ spring:
   application:
     name: report-ms
   profiles:
-    default: default
+    default: prod
   config:
     import: "optional:configserver:${CONFIG_SERVER_HOST}"
   cloud:
