@@ -9,9 +9,9 @@ spring:
   application:
     name: micro-crud
   profiles:
-    default: default
+    default: prod
   config:
-    import: "optional:configserver:http://localhost:7777"
+    import: "optional:configserver:${CONFIG_SERVER_HOST}"
 
 
 server:
@@ -32,9 +32,9 @@ logging:
 eureka:
   instance:
     instance-id: "${spring.application.name}:${random.value}"
-client:
-  service-url:
-    defaultZone: http://localhost:8761/eureka/
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://registry-server:8761/eureka/}
 
 management:
   tracing:
@@ -44,15 +44,15 @@ management:
   otlp:
     metrics:
       export:
-        url: http://localhost:4318/v1/metrics
+        url: ${OTLP_METRICS_URL}
         step: 10s
     tracing:
-      endpoint: http://localhost:4318/v1/traces
+      endpoint: ${OTLP_TRACING_URL}
 metrics:
   distribution:
     percentiles:
-      do.sleep.method.timed: 0.99, 0.95. 0.9, 0.7, 0.5
-      http.server.requests: 0.99, 0.95. 0.9, 0.7, 0.5
+      do.sleep.method.timed: 0.99, 0.95, 0.9, 0.7, 0.5
+      http.server.requests: 0.99, 0.95, 0.9, 0.7, 0.5
     percentiles-histogram:
       do.sleep.method.timed: true
       http.server.requests: true
